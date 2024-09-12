@@ -27,8 +27,34 @@ providers:
 certificatesResolvers:
   letsencrypt:
     acme:
-      email: raf@yourdomain.com
+      email: vic@yourdomain.com
       storage: acme.json
       keyType: EC384
       httpChallenge:
         entryPoint: web
+
+# Add the following configurations for logging
+log:
+  level: INFO
+  format: json
+
+accessLog:
+  filePath: "/logs/access.log"
+  bufferingSize: 0  
+  format: |
+    {{.Client.IP}} - {{.Client.User}} [{{.Request.Time.Format "02/Jan/2006:15:04:05 -0700"}}] "{{.Request.Method}} {{.Request.URL.Path}} {{.Request.Proto}}" {{.Response.StatusCode}} {{.Response.ContentLength}} "{{.Request.Referer}}" "{{.Request.UserAgent}}" 
+  # filters:
+  #   statusCodes: ["200-600"]   
+  #   retryAttempts: true     
+  #   minDuration: 20        
+  # format: json
+  # fields:
+  #   defaultMode: keep
+  #   names:
+  #     ClientUsername: drop
+  #   headers:
+  #     defaultMode: keep
+  #     names:
+  #       User-Agent: keep
+  #       Authorization: drop
+  #       Content-Type: keep
